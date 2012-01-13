@@ -3,6 +3,7 @@ require File.expand_path('../boot', __FILE__)
 require 'rails/all'
 
 Bundler.require
+require "jquery-rails" # this should be auto-included with the Bundler.require :default, Rails.env, but it's not happening
 require "omega/hosting"
 
 module Dummy
