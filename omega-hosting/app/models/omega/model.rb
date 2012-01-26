@@ -1,9 +1,9 @@
 # Overrides Omega::ApplicationModel to force all omega models to be scoped by the current account.
 
-require_engine_dependency Omega::Engine, "app/models", "omega/application_model"
+require_engine_dependency Omega::Engine, "app/models", "omega/model"
 
 module Omega
-  class ApplicationModel
+  class Model < ActiveRecord::Base
     def self.build_default_scope
       if method(:default_scope).owner != Base.singleton_class
         evaluate_default_scope { default_scope }

@@ -11,7 +11,7 @@ gem 'mysql2', '0.3.7'
 #%w(omega omega-contacts omega-calendar omega-groups omega-services omega-volunteering omega-reports).each do |name|
 #  gem name, :path => "/home/I829287/omega/#{name}"
 #end
-gem 'omega', :path => "/home/I829287/omega"
+gem 'omega', :path => "../../omega"
 
 # Use unicorn as the web server
 # gem 'unicorn'
