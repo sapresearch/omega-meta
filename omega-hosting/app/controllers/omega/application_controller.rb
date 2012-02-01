@@ -4,16 +4,15 @@ require_engine_dependency Omega::Engine, "app/controllers", "omega/application_c
 
 module Omega
   class ApplicationController < ActionController::Base
-    #around_filter :load_hosting_account
+    around_filter :load_hosting_account
 		puts "\n In Omega::ApplicationController in Omega-Meta\n"
 
     protected
       def load_hosting_account
-		# commented out for testing. uncomment later.
-        #@hosting_account = Hosting::Account.find_by_name!(params[:account_name])
-        #@hosting_account.with { yield }
+        @hosting_account = Hosting::Account.find_by_name!(params[:account_name])
+        @hosting_account.with { yield }
       rescue ActiveRecord::RecordNotFound
-         TODO
+        #TODO
         render text: "", status: 404
       end
   end
