@@ -1,5 +1,8 @@
 module Omega::Hosting
   class Account < ActiveRecord::Base
+
+		validates :name,  :uniqueness => true
+		
     class << self
       def current
         Thread.current[:omega_hosting_account]
