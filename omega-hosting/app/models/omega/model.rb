@@ -32,8 +32,7 @@ module Omega
     end
 
     default_scope do |model|
-	  # I commented this out until I add the account_id column to all tables. Otherwise, it'll return an error that there's no account_id column.
-      #model.where(:account_id => Hosting::Account.current)
+      model.where(:account_id => Hosting::Account.current)
     end
 
     belongs_to :account, :class_name => "Hosting::Account"
