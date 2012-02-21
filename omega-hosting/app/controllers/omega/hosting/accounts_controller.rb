@@ -43,21 +43,32 @@ module Omega::Hosting
     # POST /accounts.json
     def create
       @account = Account.new(params[:account])
-  
+
       respond_to do |format|
         if @account.save
 					Omega::Permission::DEFAULT_PERMISSIONS.each_key do |perm|
-        		Omega::Permission.create!(:account_id => @account.id, :name => perm.titleize, :value => perm)
+						Omega::Permission.create!(:account_id => @account.id, :name => perm.titleize, :value => perm)
 					end
+	
 					Omega::Role::DEFAULT_ROLES.each_value do |role_attributes|
 						role_attributes[:account_id] = @account.id
 						Omega::Role.create!( role_attributes )
 					end
+	
 					Omega::Role::DEFAULT_ASSIGNMENTS.each do |internal_role_name, perms|
 						role = Omega::Role.find_by_internal_name_and_account_id(internal_role_name, @account.id)
 						perms.map! { |perm| Omega::Permission.find_by_value_and_account_id(perm, @account.id) }
 						role.permissions << perms
 					end
+	
+					password = params[:user].delete(:password)
+					confirm = params[:user].delete(:password_confirmation)
+					@admin = User.new(:account_id => @account.id, :email => params[:user][:email], :username => params[:user][:username])
+					@admin.password = password
+					@admin.password_confirmation = confirm
+					@admin.roles << Omega::Role.find_by_internal_name('administrator')
+					@admin.save
+
           format.html { redirect_to @account, notice: 'Account was successfully created.' }
           format.json { render json: @account, status: :created, location: @account }
         else
