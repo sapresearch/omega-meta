@@ -5,7 +5,7 @@ require_engine_dependency Omega::Engine, "app/models", "omega/model"
 module Omega
   class Model < ActiveRecord::Base
     def self.build_default_scope
-      if method(:default_scope).owner != ActiveRecord::Base.singleton_class
+      if method(:default_scope).owner != ActiveRecord::Scoping::Default::ClassMethods
         evaluate_default_scope { default_scope }
       elsif default_scopes.any?
         evaluate_default_scope do
@@ -14,15 +14,20 @@ module Omega
               default_scope.apply_finder_options(scope)
             elsif !scope.is_a?(ActiveRecord::Relation) && scope.respond_to?(:call)
 
-				  		# This part is different from the source code: https://github.com/rails/rails/blob/v3.1.3/activerecord/lib/active_record/base.rb#L1279
+							# This overrides the standard #build_default_scope method.
+							# We override it to allow us to pass a Proc as a default_scope.
+							# If the default_scope is a proc, then it will respond_to the #arity method.
+							# Then it is evaluaeed as scope.call(self) rather than scope.call.
+							# If you get a strange error with a different version of rails, then check 
+							# the source code to see if this method has changed. This is from Rails version 3.2.1
               if scope.respond_to?(:arity) && scope.arity == 1
-                scope = scope.call(self) # passes self to scope
+                scope = scope.call(self)
               else
                 scope = scope.call
-				  		# End of the different part.
-
               end
               default_scope.merge(scope)
+				  		# End of the different part.
+
             else
               default_scope.merge(scope)
             end
