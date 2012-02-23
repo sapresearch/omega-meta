@@ -15,6 +15,4 @@ DESC
 
   s.add_dependency "rails", "~> 3.1.0"
   s.add_dependency "omega", "~> 1.0.0"
-
-  s.add_development_dependency "sqlite3"
 end
