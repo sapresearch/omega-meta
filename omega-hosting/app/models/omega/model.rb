@@ -5,7 +5,7 @@ require_engine_dependency Omega::Engine, "app/models", "omega/model"
 module Omega
   class Model < ActiveRecord::Base
     def self.build_default_scope
-      if method(:default_scope).owner != ActiveRecord::Base.singleton_class
+      if method(:default_scope).owner != ActiveRecord::Scoping::Default::ClassMethods
         evaluate_default_scope { default_scope }
       elsif default_scopes.any?
         evaluate_default_scope do
