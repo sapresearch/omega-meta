@@ -5,7 +5,6 @@ require_engine_dependency Omega::Engine, "app/controllers", "omega/application_c
 module Omega
   class ApplicationController < ActionController::Base
     around_filter :load_hosting_account
-		puts "\n In Omega::ApplicationController in Omega-Meta\n"
 
     protected
       def load_hosting_account
