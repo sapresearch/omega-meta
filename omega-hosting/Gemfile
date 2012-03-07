@@ -10,6 +10,10 @@ platforms :jruby do
 	gem 'jruby-openssl'
 end
 
+platform :ruby do
+	gem 'mysql2', "0.3.10"
+end
+
 gem 'jquery-rails'
 gem 'accepts-flattened-values', :path => '../../accepts-flattened-values'
 
