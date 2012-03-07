@@ -2,7 +2,13 @@ source 'http://rubygems.org'
 
 gem 'rails', "~> 3.2.2"
 
-gem 'omega', :path => "../../omega"
+# For development
+gem 'omega', :path => "../../../development/omega"
+gem 'accepts-flattened-values', :path => '../../../development/accepts-flattened-values'
+
+# For production
+#gem 'omega', :git => "https://pmiller10@github.com/sapresearch/omega.git"
+#gem 'accepts-flattened-values', :git => 'https://pmiller10@github.com/pmiller10/accepts-flattened-values.git'
 
 platforms :jruby do
 	gem 'activerecord-jdbcmysql-adapter'
@@ -15,7 +21,6 @@ platform :ruby do
 end
 
 gem 'jquery-rails'
-gem 'accepts-flattened-values', :path => '../../accepts-flattened-values'
 
 # Gems used only for assets and not required
 # in production environments by default.
