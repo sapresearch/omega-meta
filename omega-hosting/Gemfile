@@ -1,10 +1,10 @@
 source 'http://rubygems.org'
 
-gem 'rails', "~> 3.2.2"
+gem 'rails', "~> 3.1.4"
 
 # For development
-gem 'omega', :path => "../../../development/omega"
-gem 'accepts-flattened-values', :path => '../../../development/accepts-flattened-values'
+gem 'omega', :path => "../../omega"
+gem 'accepts-flattened-values', :path => '../../accepts-flattened-values'
 
 # For production
 #gem 'omega', :git => "https://pmiller10@github.com/sapresearch/omega.git"
